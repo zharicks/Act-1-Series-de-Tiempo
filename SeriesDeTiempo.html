@@ -1,0 +1,1194 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Introducción &#8212; Análisis de Series de Tiempo del Índice FTSE 100</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'SeriesDeTiempo';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Análisis de Series de Tiempo del Índice FTSE 100" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logoUN.png" class="logo__image only-light" alt="Análisis de Series de Tiempo del Índice FTSE 100 - Home"/>
+    <script>document.write(`<img src="_static/logoUN.png" class="logo__image only-dark" alt="Análisis de Series de Tiempo del Índice FTSE 100 - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Análisis de Series de Tiempo del Índice FTSE 100
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Introducción</strong></a></li>
+
+
+
+
+
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2FSeriesDeTiempo.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/SeriesDeTiempo.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introducción</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#"><strong>Introducción</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#importacion-de-librerias-necesarias"><strong>Importación de librerías necesarias</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#importacion-y-exploracion-de-la-base-de-datos"><strong>Importación y Exploración de la Base de Datos</strong></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-de-variables"><strong>Descripción de Variables</strong></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-de-variables-del-indice-ftse-100"><strong>Visualización de Variables del Índice FTSE 100</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-datos-faltantes-na"><strong>Análisis de Datos Faltantes (NA)</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-correlacion-de-las-variables"><strong>Análisis de Correlación de las Variables</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-estacionalidad"><strong>Análisis de Estacionalidad</strong></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prueba-de-dickey-fuller-aumentada-adf"><strong>Prueba de Dickey-Fuller Aumentada (ADF)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hipotesis-de-la-prueba-adf"><strong>Hipótesis de la Prueba ADF:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estacionarizacion-de-la-serie-de-tiempo"><strong>Estacionarización de la Serie de Tiempo</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comprobacion-de-estacionariedad"><strong>Comprobación de Estacionariedad</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descomposicion-de-la-serie-de-tiempo"><strong>Descomposición de la Serie de Tiempo</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-estacionariedad-en-los-residuales-del-modelo-aditivo"><strong>Verificación de Estacionariedad en los Residuales del Modelo Aditivo</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="introduccion">
+<h1><strong>Introducción</strong><a class="headerlink" href="#introduccion" title="Link to this heading">#</a></h1>
+<p>Se realizará un análisis de series de tiempo utilizando datos históricos del índice FTSE 100, obtenidos a través de Yahoo Finance. El objetivo es modelar y predecir el comportamiento del índice utilizando modelos ARIMA. Se explorarán diferentes horizontes de predicción (7, 14, 21 y 28 días) utilizando tanto técnicas de rolling window como sin ella. Además, se evaluará la precisión de los modelos mediante métricas como MAPE, MAE, RMSE, MSE y R2. Finalmente, se compararán los modelos utilizando diferentes criterios de selección, como AIC, BIC y HQIC.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="importacion-de-librerias-necesarias">
+<h1><strong>Importación de librerías necesarias</strong><a class="headerlink" href="#importacion-de-librerias-necesarias" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">missingno</span> <span class="k">as</span> <span class="nn">msno</span>
+<span class="kn">from</span> <span class="nn">statsmodels.stats.diagnostic</span> <span class="kn">import</span> <span class="n">acorr_ljungbox</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.seasonal</span> <span class="kn">import</span> <span class="n">seasonal_decompose</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.stattools</span> <span class="kn">import</span> <span class="n">adfuller</span>
+<span class="kn">from</span> <span class="nn">statsmodels.graphics.tsaplots</span> <span class="kn">import</span> <span class="n">plot_acf</span><span class="p">,</span> <span class="n">plot_pacf</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.arima.model</span> <span class="kn">import</span> <span class="n">ARIMA</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">jarque_bera</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">shapiro</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="kn">import</span> <span class="nn">statsmodels.tsa.api</span> <span class="k">as</span> <span class="nn">smtsa</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">kstest</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">io</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa</span> <span class="kn">import</span> <span class="n">stattools</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa</span> <span class="kn">import</span> <span class="n">seasonal</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">TimeSeriesSplit</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                    </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">yfinance</span> <span class="k">as</span> <span class="nn">yf</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;yfinance&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="importacion-y-exploracion-de-la-base-de-datos">
+<h1><strong>Importación y Exploración de la Base de Datos</strong><a class="headerlink" href="#importacion-y-exploracion-de-la-base-de-datos" title="Link to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ftse100</span> <span class="o">=</span> <span class="n">yf</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;^FTSE&#39;</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="s1">&#39;2020-01-01&#39;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;2024-09-01&#39;</span><span class="p">)</span>  
+<span class="n">display</span><span class="p">(</span><span class="n">ftse100</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">ftse100</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[*********************100%***********************]  1 of 1 completed
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Close</th>
+      <th>Adj Close</th>
+      <th>Volume</th>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-01-02</th>
+      <td>7542.399902</td>
+      <td>7624.799805</td>
+      <td>7542.399902</td>
+      <td>7604.299805</td>
+      <td>7604.299805</td>
+      <td>482206700</td>
+    </tr>
+    <tr>
+      <th>2020-01-03</th>
+      <td>7604.299805</td>
+      <td>7626.399902</td>
+      <td>7551.000000</td>
+      <td>7622.399902</td>
+      <td>7622.399902</td>
+      <td>475628900</td>
+    </tr>
+    <tr>
+      <th>2020-01-06</th>
+      <td>7622.399902</td>
+      <td>7622.399902</td>
+      <td>7528.100098</td>
+      <td>7575.299805</td>
+      <td>7575.299805</td>
+      <td>516783400</td>
+    </tr>
+    <tr>
+      <th>2020-01-07</th>
+      <td>7575.299805</td>
+      <td>7604.600098</td>
+      <td>7562.100098</td>
+      <td>7573.899902</td>
+      <td>7573.899902</td>
+      <td>511576100</td>
+    </tr>
+    <tr>
+      <th>2020-01-08</th>
+      <td>7573.899902</td>
+      <td>7579.500000</td>
+      <td>7525.000000</td>
+      <td>7574.899902</td>
+      <td>7574.899902</td>
+      <td>606225000</td>
+    </tr>
+    <tr>
+      <th>2020-01-09</th>
+      <td>7574.899902</td>
+      <td>7627.799805</td>
+      <td>7574.899902</td>
+      <td>7598.100098</td>
+      <td>7598.100098</td>
+      <td>653838100</td>
+    </tr>
+    <tr>
+      <th>2020-01-10</th>
+      <td>7598.100098</td>
+      <td>7632.000000</td>
+      <td>7585.100098</td>
+      <td>7587.899902</td>
+      <td>7587.899902</td>
+      <td>651315600</td>
+    </tr>
+    <tr>
+      <th>2020-01-13</th>
+      <td>7587.899902</td>
+      <td>7635.799805</td>
+      <td>7582.500000</td>
+      <td>7617.600098</td>
+      <td>7617.600098</td>
+      <td>659019400</td>
+    </tr>
+    <tr>
+      <th>2020-01-14</th>
+      <td>7617.600098</td>
+      <td>7650.700195</td>
+      <td>7588.799805</td>
+      <td>7622.399902</td>
+      <td>7622.399902</td>
+      <td>697648200</td>
+    </tr>
+    <tr>
+      <th>2020-01-15</th>
+      <td>7622.399902</td>
+      <td>7642.799805</td>
+      <td>7609.399902</td>
+      <td>7642.799805</td>
+      <td>7642.799805</td>
+      <td>730575200</td>
+    </tr>
+  </tbody>
+</table>
+</div></div><div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Open</th>
+      <th>High</th>
+      <th>Low</th>
+      <th>Close</th>
+      <th>Adj Close</th>
+      <th>Volume</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>1176.000000</td>
+      <td>1176.000000</td>
+      <td>1176.000000</td>
+      <td>1176.000000</td>
+      <td>1176.000000</td>
+      <td>1.176000e+03</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>7194.922710</td>
+      <td>7240.158602</td>
+      <td>7149.661824</td>
+      <td>7195.627982</td>
+      <td>7195.627982</td>
+      <td>8.503840e+08</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>665.765681</td>
+      <td>655.291936</td>
+      <td>678.511316</td>
+      <td>666.677821</td>
+      <td>666.677821</td>
+      <td>3.244453e+08</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>4993.899902</td>
+      <td>5181.000000</td>
+      <td>4898.799805</td>
+      <td>4993.899902</td>
+      <td>4993.899902</td>
+      <td>0.000000e+00</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>6919.100098</td>
+      <td>6962.625122</td>
+      <td>6858.975098</td>
+      <td>6919.100098</td>
+      <td>6919.100098</td>
+      <td>6.479182e+08</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>7355.750000</td>
+      <td>7405.199951</td>
+      <td>7318.250000</td>
+      <td>7355.750000</td>
+      <td>7355.750000</td>
+      <td>7.830432e+08</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>7608.125122</td>
+      <td>7642.200195</td>
+      <td>7567.575073</td>
+      <td>7608.375122</td>
+      <td>7608.375122</td>
+      <td>9.768749e+08</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>8445.799805</td>
+      <td>8474.400391</td>
+      <td>8427.900391</td>
+      <td>8445.799805</td>
+      <td>8445.799805</td>
+      <td>2.813498e+09</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<section id="descripcion-de-variables">
+<h2><strong>Descripción de Variables</strong><a class="headerlink" href="#descripcion-de-variables" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Descripción</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Date</p></td>
+<td><p>Fecha de la observación</p></td>
+</tr>
+<tr class="row-odd"><td><p>Open</p></td>
+<td><p>Precio de apertura del índice FTSE 100 en la fecha especificada</p></td>
+</tr>
+<tr class="row-even"><td><p>High</p></td>
+<td><p>Precio más alto alcanzado por el índice FTSE 100 durante la jornada de trading en esa fecha</p></td>
+</tr>
+<tr class="row-odd"><td><p>Low</p></td>
+<td><p>Precio más bajo alcanzado por el índice FTSE 100 durante la jornada de trading en esa fecha</p></td>
+</tr>
+<tr class="row-even"><td><p>Close</p></td>
+<td><p>Precio de cierre del índice FTSE 100 en la fecha especificada</p></td>
+</tr>
+<tr class="row-odd"><td><p>Adj Close</p></td>
+<td><p>Precio de cierre ajustado del índice FTSE 100, considerando dividendos, splits, y otros ajustes</p></td>
+</tr>
+<tr class="row-even"><td><p>Volume</p></td>
+<td><p>Volumen de acciones negociadas para el índice FTSE 100 en la fecha especificada</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="visualizacion-de-variables-del-indice-ftse-100">
+<h1><strong>Visualización de Variables del Índice FTSE 100</strong><a class="headerlink" href="#visualizacion-de-variables-del-indice-ftse-100" title="Link to this heading">#</a></h1>
+<p>En esta sección, se presentan gráficos de líneas para cada una de las variables del conjunto de datos del índice FTSE 100. Estas visualizaciones permiten observar el comportamiento de cada variable a lo largo del tiempo, proporcionando una visión clara de las tendencias, volatilidad y patrones del mercado.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Gráficos de Linea</span>
+<span class="nb">vars</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Open&#39;</span><span class="p">,</span> <span class="s1">&#39;High&#39;</span><span class="p">,</span> <span class="s1">&#39;Low&#39;</span><span class="p">,</span> <span class="s1">&#39;Close&#39;</span><span class="p">,</span> <span class="s1">&#39;Adj Close&#39;</span><span class="p">,</span> <span class="s1">&#39;Volume&#39;</span><span class="p">]</span>
+<span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;#5a189a&#39;</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">var</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">vars</span><span class="p">):</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span><span class="p">]</span>  
+    <span class="n">ftse100</span><span class="p">[</span><span class="n">var</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;FTSE 100 </span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s1"> Prices&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">var</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/46a03e64dcc15a18fb2b6eb63adca9c62227ae25f681c32bcd0cbb1030df638e.png" src="_images/46a03e64dcc15a18fb2b6eb63adca9c62227ae25f681c32bcd0cbb1030df638e.png" />
+</div>
+</div>
+<p>Al analizar las series de tiempo de las diferentes variables del índice FTSE 100, se observa que tanto los precios de apertura (<code class="docutils literal notranslate"><span class="pre">Open</span></code>), precios altos (<code class="docutils literal notranslate"><span class="pre">High</span></code>), precios bajos (<code class="docutils literal notranslate"><span class="pre">Low</span></code>), precios de cierre (<code class="docutils literal notranslate"><span class="pre">Close</span></code>) y precios de cierre ajustados (<code class="docutils literal notranslate"><span class="pre">Adj</span> <span class="pre">Close</span></code>) muestran patrones de comportamiento similares a lo largo del tiempo. Todas estas variables reflejan una marcada caída alrededor de marzo de 2020, coincidiendo con el inicio de la pandemia de COVID-19 y la volatilidad en los mercados financieros globales. Posteriormente, se nota una tendencia general de recuperación y oscilación en las cotizaciones, lo que sugiere periodos de alta volatilidad seguidos de estabilización en los años subsiguientes. En contraste, la variable de volumen (<code class="docutils literal notranslate"><span class="pre">Volume</span></code>) muestra una mayor dispersión y variabilidad, sin un patrón estacional claro, lo que indica fluctuaciones en el interés de mercado o la liquidez del índice en diferentes periodos. Estas visualizaciones permiten entender mejor el comportamiento histórico del índice FTSE 100 y son fundamentales para identificar patrones, tendencias, y posibles puntos de inflexión en su análisis predictivo y de inversión futura.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="analisis-de-datos-faltantes-na">
+<h1><strong>Análisis de Datos Faltantes (NA)</strong><a class="headerlink" href="#analisis-de-datos-faltantes-na" title="Link to this heading">#</a></h1>
+<p>Para llevar a cabo un análisis exhaustivo de series de tiempo, es fundamental identificar y manejar adecuadamente los datos faltantes en el conjunto de datos. Los datos faltantes pueden surgir debido a diversas razones, como errores de registro o problemas de captura de datos, y pueden afectar significativamente el rendimiento y la precisión de los modelos predictivos. En esta sección, realizaremos una visualización de los datos faltantes para detectar posibles patrones o irregularidades en los datos históricos del índice FTSE 100.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">MissingPercentages</span> <span class="o">=</span> <span class="p">(</span><span class="n">ftse100</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+<span class="n">MissingData</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Faltante&#39;</span><span class="p">:</span> <span class="n">MissingPercentages</span><span class="p">,</span> <span class="s1">&#39;No Faltante&#39;</span><span class="p">:</span> <span class="mi">100</span> <span class="o">-</span> <span class="n">MissingPercentages</span><span class="p">})</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="n">MissingData</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">stacked</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;#5a189a&#39;</span><span class="p">,</span> <span class="s1">&#39;#d7c8f3&#39;</span><span class="p">],</span> <span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">())</span> 
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Porcentaje de Valores Faltantes por Variable&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Variables del Dataset&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Porcentaje de Valores&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#3B3B3B&#39;</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s1">&#39;Faltante&#39;</span><span class="p">,</span> <span class="s1">&#39;No Faltante&#39;</span><span class="p">],</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/6846ded407cf8c1656f9b7871565ea3df1297eecc4029b0aa1a1fb6fc0478560.png" src="_images/6846ded407cf8c1656f9b7871565ea3df1297eecc4029b0aa1a1fb6fc0478560.png" />
+</div>
+</div>
+<p>La gráfica muestra el porcentaje de valores faltantes por variable en el conjunto de datos del índice FTSE 100. Observamos que todas las variables (<code class="docutils literal notranslate"><span class="pre">Open</span></code>, <code class="docutils literal notranslate"><span class="pre">High</span></code>, <code class="docutils literal notranslate"><span class="pre">Low</span></code>, <code class="docutils literal notranslate"><span class="pre">Close</span></code>, <code class="docutils literal notranslate"><span class="pre">Adj</span> <span class="pre">Close</span></code> y <code class="docutils literal notranslate"><span class="pre">Volume</span></code>) tienen el 100% de sus valores presentes, lo que indica que no hay datos faltantes en ninguna de ellas. Esta ausencia de datos faltantes asegura que no se requerirán técnicas de imputación o eliminación de datos, lo cual es beneficioso para el análisis de series de tiempo, ya que permite trabajar directamente con los datos completos sin la necesidad de realizar preprocesamiento adicional para manejar valores faltantes.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="analisis-de-correlacion-de-las-variables">
+<h1><strong>Análisis de Correlación de las Variables</strong><a class="headerlink" href="#analisis-de-correlacion-de-las-variables" title="Link to this heading">#</a></h1>
+<p>En esta sección, se presenta la matriz de correlación entre las diferentes variables del índice FTSE 100 para entender las relaciones lineales que puedan existir entre ellas. La matriz de correlación permite identificar qué variables están estrechamente relacionadas, lo cual es esencial para simplificar el análisis y la modelación de series de tiempo.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">ftse100</span><span class="o">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Purples&#39;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Matriz de Correlación de Todas las Variables del FTSE 100&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/15650088d85cbd12fee9efb2f116e1ede2d3ab5238415508d8ccc5dc78af7c10.png" src="_images/15650088d85cbd12fee9efb2f116e1ede2d3ab5238415508d8ccc5dc78af7c10.png" />
+</div>
+</div>
+<p>La matriz de correlación muestra una alta correlación positiva (cercana a 1) entre las variables <code class="docutils literal notranslate"><span class="pre">Open</span></code>, <code class="docutils literal notranslate"><span class="pre">High</span></code>, <code class="docutils literal notranslate"><span class="pre">Low</span></code>, <code class="docutils literal notranslate"><span class="pre">Close</span></code> y <code class="docutils literal notranslate"><span class="pre">Adj</span> <span class="pre">Close</span></code> en el índice FTSE 100, lo que indica que estas variables se mueven de manera similar y contienen información redundante. Por otro lado, la variable <code class="docutils literal notranslate"><span class="pre">Volume</span></code> muestra una correlación muy baja con las demás, lo que sugiere que captura información diferente sobre el mercado. Dado que <code class="docutils literal notranslate"><span class="pre">Adj</span> <span class="pre">Close</span></code> (cierre ajustado) refleja mejor el valor final ajustado por eventos corporativos como dividendos y divisiones de acciones, y mantiene la misma alta correlación que <code class="docutils literal notranslate"><span class="pre">Close</span></code>, es razonable quedarse con la variable <code class="docutils literal notranslate"><span class="pre">Adj</span> <span class="pre">Close</span></code> para un análisis de series de tiempo más representativo del comportamiento del índice sin redundancia innecesaria.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">statsmodels.graphics.tsaplots</span> <span class="kn">import</span> <span class="n">plot_acf</span><span class="p">,</span> <span class="n">plot_pacf</span>
+
+<span class="c1"># Parámetros de la figura</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;figure.figsize&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">)})</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.usetex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>  
+
+<span class="c1"># Parámetros de los gráficos de autocorrelación</span>
+<span class="n">nlag</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+
+<span class="c1"># Gráfico de la serie de tiempo original de &#39;Adj Close&#39;</span>
+<span class="n">ftse100</span><span class="p">[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#5a189a&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Serie Original de Ajuste de Cierre (Adj Close)&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">)</span>
+
+<span class="c1"># Gráfico de Autocorrelación (ACF) para &#39;Adj Close&#39;</span>
+<span class="n">plot_acf</span><span class="p">(</span><span class="n">ftse100</span><span class="p">[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">],</span> <span class="n">lags</span><span class="o">=</span><span class="n">nlag</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#5a189a&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Función de Autocorrelación (ACF) de Adj Close&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Lags&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Autocorrelación&#39;</span><span class="p">)</span>
+
+<span class="c1"># Gráfico de Autocorrelación Parcial (PACF) para &#39;Adj Close&#39;</span>
+<span class="n">plot_pacf</span><span class="p">(</span><span class="n">ftse100</span><span class="p">[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">],</span> <span class="n">lags</span><span class="o">=</span><span class="n">nlag</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#5a189a&#39;</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;ywm&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Función de Autocorrelación Parcial (PACF) de Adj Close&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Lags&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Autocorrelación Parcial&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/68c8d4102dcfe548584f0c1ba4472dbd6cf7479329dba67321e447b725aef8ba.png" src="_images/68c8d4102dcfe548584f0c1ba4472dbd6cf7479329dba67321e447b725aef8ba.png" />
+</div>
+</div>
+<p>El primer gráfico muestra la evolución temporal del precio de cierre ajustado desde 2020 hasta 2024. Se observa una tendencia general de recuperación y crecimiento, especialmente después de la caída significativa a principios de 2020, coincidiendo con el impacto inicial de la pandemia de COVID-19 en los mercados financieros. Posteriormente, el índice muestra oscilaciones de mediano plazo y un crecimiento sostenido, alcanzando niveles altos en 2024, lo que sugiere una recuperación económica y confianza del mercado.</p>
+<p>El segundo gráfico, la Función de Autocorrelación (ACF) de la serie de tiempo, revela una alta autocorrelación positiva en los primeros lags, la cual disminuye gradualmente a medida que aumenta el número de lags. Este patrón de autocorrelación sugiere que el precio de cierre ajustado tiene una fuerte dependencia temporal, es decir, los valores pasados del índice tienen un efecto significativo en los valores futuros cercanos. La lenta disminución de la ACF es indicativa de una posible no estacionariedad en la serie de tiempo, lo que puede ser común en datos financieros donde las series muestran tendencias o ciclos prolongados.</p>
+<p>El tercer gráfico, la Función de Autocorrelación Parcial (PACF), muestra que la autocorrelación disminuye abruptamente después del primer lag, lo que indica que el efecto de los precios pasados se controla en gran medida por los primeros rezagos. Este comportamiento es característico de un proceso AR (Autoregressive) de bajo orden, como AR(1) o AR(2), donde los efectos de autocorrelación más lejanos se vuelven insignificantes una vez que se considera la influencia del primer o segundo rezago. Este hallazgo sugiere que un modelo ARIMA de bajo orden podría ser adecuado para modelar esta serie de tiempo.</p>
+<p>En conjunto, estos gráficos indican que la serie de tiempo del precio de cierre ajustado del FTSE 100 muestra patrones significativos de autocorrelación que pueden capturarse mediante modelos ARIMA. Sin embargo, la serie también sugiere no estacionariedad, lo que requerirá diferenciación para estabilizar la media y eliminar la tendencia antes de aplicar cualquier modelo predictivo. La información proporcionada por el ACF y el PACF es crucial para la selección del orden apropiado del modelo ARIMA que mejor describa y prediga el comportamiento futuro del índice.</p>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="analisis-de-estacionalidad">
+<h1><strong>Análisis de Estacionalidad</strong><a class="headerlink" href="#analisis-de-estacionalidad" title="Link to this heading">#</a></h1>
+<p>El análisis de estacionalidad en series de tiempo es un componente esencial para comprender las fluctuaciones cíclicas que ocurren de manera regular en un periodo específico. En el contexto del índice FTSE 100, la estacionalidad puede reflejar patrones repetitivos influenciados por factores como ciclos económicos, eventos geopolíticos, tendencias del mercado o incluso efectos estacionales como los meses de cierre fiscal y el comportamiento de los inversores. En esta sección, exploraremos la presencia de estacionalidad en los datos del precio de cierre ajustado (Adj Close) del FTSE 100. Utilizaremos técnicas como la descomposición de la serie de tiempo y gráficos de autocorrelación (ACF y PACF) para identificar cualquier patrón estacional presente en diferentes frecuencias, como mensual, trimestral o anual. Un análisis adecuado de la estacionalidad no solo nos permitirá comprender mejor el comportamiento pasado del índice, sino también ajustar los modelos predictivos ARIMA para capturar efectivamente estos patrones, proporcionando una base sólida para las proyecciones futuras del mercado.</p>
+<section id="prueba-de-dickey-fuller-aumentada-adf">
+<h2><strong>Prueba de Dickey-Fuller Aumentada (ADF)</strong><a class="headerlink" href="#prueba-de-dickey-fuller-aumentada-adf" title="Link to this heading">#</a></h2>
+<p>La prueba de Dickey-Fuller aumentada (ADF) es una prueba estadística que se utiliza para verificar si una serie de tiempo es estacionaria. La estacionariedad es una propiedad fundamental de las series de tiempo donde sus propiedades estadísticas (como la media, la varianza, y la autocorrelación) no cambian a lo largo del tiempo. Los modelos de series de tiempo como ARIMA requieren que los datos sean estacionarios para producir predicciones confiables.</p>
+<section id="hipotesis-de-la-prueba-adf">
+<h3><strong>Hipótesis de la Prueba ADF:</strong><a class="headerlink" href="#hipotesis-de-la-prueba-adf" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Hipótesis nula (<span class="math notranslate nohighlight">\(H_0\)</span>): La serie de tiempo no es estacionaria (tiene una raíz unitaria).</p></li>
+<li><p>Hipótesis alternativa (<span class="math notranslate nohighlight">\(H_1\)</span>): La serie de tiempo es estacionaria.</p></li>
+</ul>
+<p>Si el valor p es menor que un nivel de significancia (0.05), se rechaza la hipótesis nula y se concluye que la serie de tiempo es estacionaria.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">adfuller</span><span class="p">(</span><span class="n">ftse100</span><span class="p">[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Estadístico ADF:&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Valor p:&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Número de rezagos utilizados:&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Número de observaciones utilizadas:&#39;</span><span class="p">,</span> <span class="n">result</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Valores críticos:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">result</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;   </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">value</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estadístico ADF: -1.4057488836865983
+Valor p: 0.5795169492310881
+Número de rezagos utilizados: 21
+Número de observaciones utilizadas: 1154
+Valores críticos:
+   1%: -3.436
+   5%: -2.864
+   10%: -2.568
+</pre></div>
+</div>
+</div>
+</div>
+<p>El resultado de la prueba de Dickey-Fuller Aumentada (ADF) para la serie de tiempo presenta un <strong>estadístico ADF de -1.4057</strong> y un <strong>valor p de 0.5795</strong>, lo cual es considerablemente mayor que los niveles de significancia habituales (1%, 5%, y 10%). Dado que el valor p es mayor que 0.05, no se puede rechazar la hipótesis nula de que la serie de tiempo tiene una raíz unitaria, lo que indica que la serie no es estacionaria en su forma actual. Además, los valores críticos de -3.436 (1%), -2.864 (5%), y -2.568 (10%) confirman que el estadístico ADF no supera estos umbrales, lo que refuerza la conclusión de que la serie de tiempo no es estacionaria.</p>
+<p>En consecuencia, para hacer que esta serie sea adecuada para modelos de series de tiempo que requieren estacionariedad, como el ARIMA, sería necesario aplicar transformaciones adicionales, como la diferenciación. Esto permitiría estabilizar la media de la serie y eliminar cualquier tendencia persistente antes de proceder con el análisis predictivo.</p>
+</section>
+<section id="estacionarizacion-de-la-serie-de-tiempo">
+<h3><strong>Estacionarización de la Serie de Tiempo</strong><a class="headerlink" href="#estacionarizacion-de-la-serie-de-tiempo" title="Link to this heading">#</a></h3>
+<p>La <strong>diferenciación</strong> es un método clave en el análisis de series de tiempo para eliminar la tendencia y convertir una serie no estacionaria en una serie estacionaria. La estacionariedad es esencial porque garantiza que las propiedades estadísticas de la serie, como la media y la varianza, sean constantes a lo largo del tiempo, lo que es un requisito para los modelos como ARIMA. La diferenciación se realiza restando cada valor de la serie con su valor anterior, lo que elimina tendencias lineales. Si una sola diferenciación no es suficiente, se pueden aplicar diferenciaciones adicionales.</p>
+<p>En esta sección, aplicaremos la diferenciación a la serie <code class="docutils literal notranslate"><span class="pre">Adj</span> <span class="pre">Close</span></code> del índice FTSE 100 para eliminar la tendencia identificada en los análisis previos. Posteriormente, evaluaremos si la serie diferenciada es estacionaria mediante la <strong>prueba de Dickey-Fuller Aumentada (ADF)</strong>. Si la serie se vuelve estacionaria, estaremos listos para proceder con la construcción de modelos predictivos.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Aplicar diferenciación simple para estacionalizar la serie de tiempo</span>
+<span class="n">ftse100Dif</span> <span class="o">=</span> <span class="n">ftse100</span><span class="p">[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="c1"># Graficar la serie diferenciada</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ftse100Dif</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#5a189a&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Serie de Tiempo Diferenciada (Adj Close)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Fecha&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Diferenciación de Adj Close&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/d0e07926cdcc92ce19c052d9d6695b6631561d398645041ce78fdd276ea2ff2d.png" src="_images/d0e07926cdcc92ce19c052d9d6695b6631561d398645041ce78fdd276ea2ff2d.png" />
+</div>
+</div>
+<section id="comprobacion-de-estacionariedad">
+<h4><strong>Comprobación de Estacionariedad</strong><a class="headerlink" href="#comprobacion-de-estacionariedad" title="Link to this heading">#</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">statsmodels.tsa.stattools</span> <span class="kn">import</span> <span class="n">adfuller</span>
+
+<span class="c1"># Prueba de Dickey-Fuller Aumentada (ADF) sobre la serie diferenciada</span>
+<span class="n">result_diff</span> <span class="o">=</span> <span class="n">adfuller</span><span class="p">(</span><span class="n">ftse100Dif</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Estadístico ADF: </span><span class="si">{</span><span class="n">result_diff</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Valor p: </span><span class="si">{</span><span class="n">result_diff</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Valores críticos:&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">result_diff</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;   </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">value</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Estadístico ADF: -7.743837804636812
+Valor p: 1.0446608933016453e-11
+Valores críticos:
+   1%: -3.436
+   5%: -2.864
+   10%: -2.568
+</pre></div>
+</div>
+</div>
+</div>
+<p>El resultado de la prueba de Dickey-Fuller Aumentada (ADF) después de aplicar la diferenciación a la serie de tiempo muestra un <strong>estadístico ADF de -7.7438</strong> y un <strong>valor p extremadamente bajo</strong> de 1.04e-11. Este valor p es mucho menor que los niveles de significancia comunes (1%, 5%, y 10%), lo que indica que podemos <strong>rechazar la hipótesis nula</strong> de que la serie de tiempo tiene una raíz unitaria.</p>
+<p>Además, los <strong>valores críticos</strong> de -3.436 (1%), -2.864 (5%) y -2.568 (10%) confirman que el estadístico ADF es mucho menor que cualquiera de estos umbrales, lo que refuerza la conclusión de que la serie diferenciada es <strong>estacionaria</strong>.</p>
+<p>En resumen, después de aplicar la diferenciación, la serie de tiempo del precio de cierre ajustado (<code class="docutils literal notranslate"><span class="pre">Adj</span> <span class="pre">Close</span></code>) ahora cumple con las condiciones de estacionariedad, lo que la hace adecuada para su uso en modelos ARIMA u otros modelos de series de tiempo que requieren datos estacionarios para generar predicciones confiables.</p>
+</section>
+</section>
+</section>
+<section id="descomposicion-de-la-serie-de-tiempo">
+<h2><strong>Descomposición de la Serie de Tiempo</strong><a class="headerlink" href="#descomposicion-de-la-serie-de-tiempo" title="Link to this heading">#</a></h2>
+<p>Al descomponer la serie de tiempo en sus componentes de tendencia, estacionalidad y residuales, se puede obtener una comprensión más profunda de las dinámicas que afectan al índice a lo largo del tiempo, lo que permite mejorar la precisión de los modelos predictivos y tomar decisiones informadas.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa.seasonal</span> <span class="kn">import</span> <span class="n">seasonal_decompose</span>
+
+<span class="n">decomposition</span> <span class="o">=</span> <span class="n">seasonal_decompose</span><span class="p">(</span><span class="n">ftse100Dif</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s1">&#39;additive&#39;</span><span class="p">,</span> <span class="n">period</span><span class="o">=</span><span class="mi">252</span><span class="p">)</span>
+
+<span class="c1"># Configurar el tamaño de la figura</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># Graficar la serie observada</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">411</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">decomposition</span><span class="o">.</span><span class="n">observed</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#5a189a&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Serie Observada&#39;</span><span class="p">)</span>
+
+<span class="c1"># Graficar la tendencia</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">412</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">decomposition</span><span class="o">.</span><span class="n">trend</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#ab51e3&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Tendencia&#39;</span><span class="p">)</span>
+
+<span class="c1"># Graficar la estacionalidad</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">413</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">decomposition</span><span class="o">.</span><span class="n">seasonal</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#5a189a&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Estacionalidad&#39;</span><span class="p">)</span>
+
+<span class="c1"># Graficar los residuales</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">414</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">decomposition</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#ab51e3&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Residuales&#39;</span><span class="p">)</span>
+
+<span class="c1"># Ajustar el diseño de la cuadrícula</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/aea2c3bc6d085ad438ed5b864221ef1d72e88cec8008fe976d68a223a23ab2e7.png" src="_images/aea2c3bc6d085ad438ed5b864221ef1d72e88cec8008fe976d68a223a23ab2e7.png" />
+</div>
+</div>
+<p>La gráfica muestra la descomposición de la serie de tiempo diferenciada (<code class="docutils literal notranslate"><span class="pre">Adj</span> <span class="pre">Close</span></code>) en cuatro componentes clave: la serie observada, tendencia, estacionalidad y residuales.</p>
+<ul class="simple">
+<li><p><strong>Serie Observada</strong>: Muestra la serie diferenciada, que elimina la tendencia de largo plazo, y revela fluctuaciones a lo largo del tiempo con mayor intensidad a inicios de 2020, probablemente como reflejo de eventos significativos, como la caída del mercado durante la pandemia. Posteriormente, las fluctuaciones se estabilizan en amplitud.</p></li>
+<li><p><strong>Tendencia</strong>: La tendencia diferenciada capta movimientos más sutiles en el comportamiento del mercado. Aunque se ha eliminado gran parte de la tendencia global, este componente muestra pequeñas fluctuaciones, lo que indica que aún persisten algunos movimientos de largo plazo en los datos, pero con menor magnitud.</p></li>
+<li><p><strong>Estacionalidad</strong>: El componente estacional presenta oscilaciones regulares que parecen repetirse de manera cíclica, aunque no de forma muy pronunciada. Estas fluctuaciones reflejan patrones recurrentes en el mercado, posiblemente relacionados con factores cíclicos del comportamiento financiero.</p></li>
+<li><p><strong>Residuales</strong>: Los residuales representan el ruido no explicado por la tendencia ni la estacionalidad. Aunque son relativamente aleatorios, aún se observan algunas oscilaciones fuertes en ciertos puntos, lo que podría sugerir la existencia de eventos externos o factores no modelados adecuadamente.</p></li>
+</ul>
+<p>En general, la descomposición nos proporciona una visión clara de cómo se comportan los componentes individuales de la serie de tiempo diferenciada, lo que permite analizar más detalladamente los patrones estacionales y las fluctuaciones residuales, útiles para construir modelos predictivos más precisos.</p>
+<section id="verificacion-de-estacionariedad-en-los-residuales-del-modelo-aditivo">
+<h3><strong>Verificación de Estacionariedad en los Residuales del Modelo Aditivo</strong><a class="headerlink" href="#verificacion-de-estacionariedad-en-los-residuales-del-modelo-aditivo" title="Link to this heading">#</a></h3>
+<p>En esta sección, se aplicará la prueba de Dickey-Fuller Aumentada (ADF) sobre los residuales obtenidos tras la descomposición aditiva de la serie de tiempo diferenciada del FTSE 100. El objetivo es verificar si los residuales resultantes son estacionarios, lo cual es un indicador de que los componentes de tendencia y estacionalidad han sido eliminados correctamente y que lo que resta es ruido blanco.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">statsmodels.tsa</span> <span class="kn">import</span> <span class="n">stattools</span>
+
+<span class="c1"># Realizar la prueba de Dickey-Fuller Aumentada sobre los residuales del modelo aditivo</span>
+<span class="n">adf_result</span> <span class="o">=</span> <span class="n">stattools</span><span class="o">.</span><span class="n">adfuller</span><span class="p">(</span><span class="n">decomposition</span><span class="o">.</span><span class="n">resid</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">decomposition</span><span class="o">.</span><span class="n">resid</span><span class="p">))[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">autolag</span><span class="o">=</span><span class="s1">&#39;AIC&#39;</span><span class="p">)</span>
+
+<span class="c1"># Imprimir el valor p de la prueba ADF</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;P-valor de la prueba ADF sobre los residuales: &#39;</span><span class="p">,</span> <span class="n">adf_result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># Interpretación del resultado</span>
+<span class="k">if</span> <span class="n">adf_result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">0.05</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Los residuales son estacionarios.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Los residuales no son estacionarios.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>P-valor de la prueba ADF sobre los residuales:  0.0
+Los residuales son estacionarios.
+</pre></div>
+</div>
+</div>
+</div>
+<p>El resultado de la prueba de Dickey-Fuller Aumentada (ADF) sobre los residuales de la serie diferenciada del FTSE 100 muestra un <strong>p-valor de 0.0</strong>, lo que indica que los residuales son <strong>estacionarios</strong>. Esto significa que el modelo ha logrado eliminar correctamente la tendencia y la estacionalidad de la serie, capturando los patrones predecibles y dejando solo ruido blanco o fluctuaciones aleatorias. Como consecuencia, podemos concluir que el modelo es adecuado y efectivo para representar los datos, lo que garantiza que las predicciones futuras basadas en este análisis serán más confiables y sin sesgos sistemáticos.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><strong>Análisis de Series de Tiempo del Índice FTSE 100</strong></p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#"><strong>Introducción</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#importacion-de-librerias-necesarias"><strong>Importación de librerías necesarias</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#importacion-y-exploracion-de-la-base-de-datos"><strong>Importación y Exploración de la Base de Datos</strong></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descripcion-de-variables"><strong>Descripción de Variables</strong></a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizacion-de-variables-del-indice-ftse-100"><strong>Visualización de Variables del Índice FTSE 100</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-datos-faltantes-na"><strong>Análisis de Datos Faltantes (NA)</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-correlacion-de-las-variables"><strong>Análisis de Correlación de las Variables</strong></a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#analisis-de-estacionalidad"><strong>Análisis de Estacionalidad</strong></a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prueba-de-dickey-fuller-aumentada-adf"><strong>Prueba de Dickey-Fuller Aumentada (ADF)</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hipotesis-de-la-prueba-adf"><strong>Hipótesis de la Prueba ADF:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#estacionarizacion-de-la-serie-de-tiempo"><strong>Estacionarización de la Serie de Tiempo</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#comprobacion-de-estacionariedad"><strong>Comprobación de Estacionariedad</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descomposicion-de-la-serie-de-tiempo"><strong>Descomposición de la Serie de Tiempo</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#verificacion-de-estacionariedad-en-los-residuales-del-modelo-aditivo"><strong>Verificación de Estacionariedad en los Residuales del Modelo Aditivo</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Zharick Sofía Molina Cabas
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
